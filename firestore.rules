@@ -1,0 +1,80 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+    function incoming() {
+      return request.resource.data;
+    }
+    function existing() {
+      return resource.data;
+    }
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Inquiry validation (allow public creation with rate/size protection, read restricted)
+    function isValidInquiry(data) {
+      return data.keys().hasAll(['name', 'email', 'message', 'createdAt']) &&
+        data.name is string && data.name.size() > 0 && data.name.size() <= 100 &&
+        data.email is string && data.email.size() > 0 && data.email.size() <= 150 &&
+        (!('subject' in data) || (data.subject is string && data.subject.size() <= 150)) &&
+        data.message is string && data.message.size() > 0 && data.message.size() <= 2000 &&
+        data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    match /inquiries/{inquiryId} {
+      allow create: if isValidId(inquiryId) && isValidInquiry(incoming());
+      allow read, update, delete: if false;
+    }
+
+    // Guestbook validation (allow authenticated users to write notes)
+    function isValidGuestbookEntry(data) {
+      return data.keys().hasAll(['userId', 'authorName', 'message', 'category', 'createdAt']) &&
+        isSignedIn() &&
+        data.userId == request.auth.uid &&
+        data.authorName is string && data.authorName.size() > 0 && data.authorName.size() <= 100 &&
+        (!('authorEmail' in data) || (data.authorEmail is string && data.authorEmail.size() <= 150)) &&
+        (!('authorPhoto' in data) || (data.authorPhoto is string && data.authorPhoto.size() <= 500)) &&
+        data.message is string && data.message.size() > 0 && data.message.size() <= 500 &&
+        data.category in ['general', 'collaboration', 'hiring', 'shoutout'] &&
+        data.createdAt is string && data.createdAt.size() <= 64;
+    }
+
+    match /guestbook/{entryId} {
+      allow read: if true;
+      allow create: if isValidId(entryId) && isValidGuestbookEntry(incoming());
+      allow update: if isValidId(entryId) && isSignedIn() &&
+        existing().userId == request.auth.uid &&
+        isValidGuestbookEntry(incoming()) &&
+        incoming().userId == existing().userId &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['message', 'category']);
+      allow delete: if isValidId(entryId) && isSignedIn() && existing().userId == request.auth.uid;
+    }
+
+    // Project reactions validation
+    function isValidProjectReaction(data) {
+      return data.keys().hasAll(['projectId', 'likesCount', 'updatedAt']) &&
+        data.projectId is string && data.projectId.size() <= 64 &&
+        data.likesCount is number && data.likesCount >= 0 && data.likesCount <= 1000000 &&
+        data.updatedAt is string && data.updatedAt.size() <= 64;
+    }
+
+    match /reactions/{projectId} {
+      allow read: if true;
+      allow create, update: if isValidId(projectId) && isValidProjectReaction(incoming());
+      allow delete: if false;
+    }
+
+    // Connection test document
+    match /test/connection {
+      allow read: if true;
+    }
+  }
+}

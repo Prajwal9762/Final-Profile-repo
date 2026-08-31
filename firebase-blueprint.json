@@ -1,0 +1,113 @@
+{
+  "entities": {
+    "Inquiry": {
+      "title": "Inquiry",
+      "description": "Direct contact inquiries sent to Prajwal",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Sender's full name"
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Sender's email address"
+        },
+        "subject": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Inquiry subject line"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Inquiry message content"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Server timestamp formatted string or ISO time"
+        }
+      },
+      "required": ["name", "email", "message", "createdAt"]
+    },
+    "GuestbookEntry": {
+      "title": "GuestbookEntry",
+      "description": "Live visitor guestbook entries and endorsements",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "maxLength": 128,
+          "description": "Firebase Auth UID of the author"
+        },
+        "authorName": {
+          "type": "string",
+          "maxLength": 100,
+          "description": "Display name of author"
+        },
+        "authorEmail": {
+          "type": "string",
+          "maxLength": 150,
+          "description": "Email of author"
+        },
+        "authorPhoto": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Avatar URL of author"
+        },
+        "message": {
+          "type": "string",
+          "maxLength": 500,
+          "description": "Endorsement or note text"
+        },
+        "category": {
+          "type": "string",
+          "enum": ["general", "collaboration", "hiring", "shoutout"],
+          "description": "Category of message"
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp"
+        }
+      },
+      "required": ["userId", "authorName", "message", "category", "createdAt"]
+    },
+    "ProjectReaction": {
+      "title": "ProjectReaction",
+      "description": "Visitor reactions and claps for portfolio projects",
+      "type": "object",
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "maxLength": 64,
+          "description": "ID of the target project"
+        },
+        "likesCount": {
+          "type": "number",
+          "description": "Total count of claps/likes"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp"
+        }
+      },
+      "required": ["projectId", "likesCount", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/inquiries/{inquiryId}": {
+      "schema": "Inquiry",
+      "description": "Contact inquiries submitted by visitors"
+    },
+    "/guestbook/{entryId}": {
+      "schema": "GuestbookEntry",
+      "description": "Public guestbook notes left by verified visitors"
+    },
+    "/reactions/{projectId}": {
+      "schema": "ProjectReaction",
+      "description": "Aggregated project reaction and like counts"
+    }
+  }
+}

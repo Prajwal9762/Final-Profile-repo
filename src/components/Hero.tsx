@@ -5,7 +5,7 @@ import { HeroVisual } from './HeroVisual';
 import { HolographicDevCard } from './HolographicDevCard';
 import { soundFx } from '../utils/audio';
 import { THEMES, ThemeId } from '../utils/theme';
-import { BRAND_LOGO_SRC } from '../utils/brand';
+import { BRAND_LOGO_SRC, BRAND_GITHUB } from '../utils/brand';
 
 interface HeroProps {
   onExplore: () => void;
@@ -247,7 +247,7 @@ export const Hero: React.FC<HeroProps> = ({ onExplore, isMobile, themeId = 'cyan
               </button>
 
               <a
-                href="https://github.com/prajwal9762"
+                href={BRAND_GITHUB}
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={() => soundFx.playHover()}

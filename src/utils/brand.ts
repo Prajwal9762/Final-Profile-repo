@@ -6,6 +6,7 @@ export const BRAND_TITLE = 'BSc CSIT Student & Tech Learner';
 export const BRAND_LOCATION = 'Kathmandu, Nepal';
 export const BRAND_EMAIL = 'idt1269@gmail.com';
 export const BRAND_GITHUB = 'https://github.com/prajwal9762';
+export const BRAND_GITHUB_HANDLE = '@prajwal9762';
 export const BRAND_WEBSITE = 'https://prajwal-pokharel.com.np';
 export const BRAND_EMBLEM_NAME = 'Solar Fox Sigil';
 

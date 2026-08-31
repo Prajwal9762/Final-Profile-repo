@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ShieldCheck, QrCode, Cpu, Sparkles, Terminal, Code2, RotateCw, MapPin, Globe, Award, Radio } from 'lucide-react';
 import { soundFx } from '../utils/audio';
-import { BRAND_LOGO_SRC } from '../utils/brand';
+import { BRAND_LOGO_SRC, BRAND_GITHUB_HANDLE, BRAND_WEBSITE } from '../utils/brand';
 
 export const HolographicDevCard: React.FC = () => {
   const cardRef = useRef<HTMLDivElement | null>(null);
@@ -205,11 +205,11 @@ export const HolographicDevCard: React.FC = () => {
             <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
               <div className="flex items-center gap-2 text-slate-400 font-mono text-[10px]">
                 <Globe className="h-3.5 w-3.5 text-cyan-400" />
-                <span>prajwal-pokharel.com.np</span>
+                <span>{BRAND_WEBSITE.replace('https://', '')}</span>
               </div>
 
               <div className="text-[10px] font-mono text-purple-400 font-bold">
-                @prajwal9762
+                {BRAND_GITHUB_HANDLE}
               </div>
             </div>
           </div>

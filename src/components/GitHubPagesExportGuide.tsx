@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Check, Copy, Download, Github, Terminal, BookOpen, ExternalLink } from 'lucide-react';
 import { soundFx } from '../utils/audio';
+import { BRAND_GITHUB, BRAND_GITHUB_HANDLE } from '../utils/brand';
 
 export const GitHubPagesExportGuide: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
   isOpen,
@@ -45,7 +46,7 @@ export const GitHubPagesExportGuide: React.FC<{ isOpen: boolean; onClose: () => 
   const steps = [
     {
       title: '1. Download / Clone Source Code',
-      cmd: 'git clone https://github.com/prajwal9762/prajwal-pokharel-portfolio.git\ncd prajwal-pokharel-portfolio',
+      cmd: `git clone ${BRAND_GITHUB}/portfolio.git\ncd portfolio`,
       desc: 'Ensure all portfolio files are placed in your local git repository folder.',
     },
     {
@@ -56,7 +57,7 @@ export const GitHubPagesExportGuide: React.FC<{ isOpen: boolean; onClose: () => 
     {
       title: '3. Push Code to GitHub Repository',
       cmd: 'git add .\ngit commit -m "Deploy Ultra-Animated Portfolio"\ngit push origin main',
-      desc: 'Push your source code to your GitHub repository (@prajwal9762).',
+      desc: `Push your source code to your GitHub repository (${BRAND_GITHUB_HANDLE}).`,
     },
     {
       title: '4. Enable GitHub Pages Deployment',

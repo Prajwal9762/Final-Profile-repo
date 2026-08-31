@@ -4,7 +4,7 @@ import { Layers, Plus, Github, ExternalLink, Sparkles, Code2, Play, Eye, Termina
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { soundFx } from '../utils/audio';
-import { BRAND_GITHUB, BRAND_WEBSITE } from '../utils/brand';
+import { BRAND_GITHUB, BRAND_GITHUB_HANDLE, BRAND_WEBSITE } from '../utils/brand';
 
 interface LabProject {
   id: string;
@@ -40,12 +40,17 @@ export const ProjectsSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) =
           }
         },
         (error) => {
-          handleFirestoreError(error, OperationType.LIST, 'portfolio_meta/project_claps');
+          console.warn('Real-time reactions subscription error:', error);
+          try {
+            handleFirestoreError(error, OperationType.GET, 'portfolio_meta/project_claps');
+          } catch {
+            // Logged via handleFirestoreError
+          }
         }
       );
       return () => unsubscribe();
-    } catch {
-      // Fallback
+    } catch (err) {
+      console.warn('Unable to attach project reaction listener:', err);
     }
   }, []);
 
@@ -61,7 +66,12 @@ export const ProjectsSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) =
       const docRef = doc(db, 'portfolio_meta', 'project_claps');
       await setDoc(docRef, { [projectId]: newCount }, { merge: true });
     } catch (error) {
-      handleFirestoreError(error, OperationType.WRITE, 'portfolio_meta/project_claps');
+      console.warn('Error recording clap to Firestore:', error);
+      try {
+        handleFirestoreError(error, OperationType.WRITE, 'portfolio_meta/project_claps');
+      } catch {
+        // Handled
+      }
     }
   };
 
@@ -166,7 +176,7 @@ export const ProjectsSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) =
             className="flex items-center gap-2 rounded-2xl border border-slate-700 bg-slate-900/80 px-4 py-2.5 font-mono text-xs font-semibold text-slate-200 hover:border-amber-500/40 hover:text-amber-300 transition-all backdrop-blur-md self-start sm:self-auto"
           >
             <Github className="h-4 w-4 text-amber-400" />
-            <span>FOLLOW ON GITHUB (@prajwal9762)</span>
+            <span>FOLLOW ON GITHUB ({BRAND_GITHUB_HANDLE})</span>
           </a>
         </div>
 

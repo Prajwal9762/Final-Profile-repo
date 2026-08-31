@@ -94,6 +94,17 @@
         }
       },
       "required": ["projectId", "likesCount", "updatedAt"]
+    },
+    "PortfolioMeta": {
+      "title": "PortfolioMeta",
+      "description": "Aggregated project interaction counters and metadata",
+      "type": "object",
+      "properties": {
+        "project_claps": {
+          "type": "object",
+          "description": "Map of project keys to cheer count"
+        }
+      }
     }
   },
   "firestore": {
@@ -108,6 +119,10 @@
     "/reactions/{projectId}": {
       "schema": "ProjectReaction",
       "description": "Aggregated project reaction and like counts"
+    },
+    "/portfolio_meta/{metaId}": {
+      "schema": "PortfolioMeta",
+      "description": "Aggregated stats, cheers and reaction counts"
     }
   }
 }

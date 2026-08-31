@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { Github, Star, GitFork, ExternalLink, Copy, Check, Terminal, Code } from 'lucide-react';
 import { soundFx } from '../utils/audio';
+import { BRAND_GITHUB } from '../utils/brand';
 
 export const GitHubSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [stars, setStars] = useState(42);
+  const githubUsername = BRAND_GITHUB.replace('https://github.com/', '@') || '@prajwal';
 
   const handleCopyLink = () => {
     soundFx.playClick();
-    navigator.clipboard.writeText('https://github.com/prajwal9762');
+    navigator.clipboard.writeText(BRAND_GITHUB);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -32,7 +34,7 @@ export const GitHubSection: React.FC = () => {
               </div>
 
               <h2 className="font-syne text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
-                @prajwal9762
+                {githubUsername}
               </h2>
 
               <p className="mt-3 text-slate-300 text-sm sm:text-base max-w-xl leading-relaxed font-sans">
@@ -46,14 +48,14 @@ export const GitHubSection: React.FC = () => {
                   <span className="text-slate-300 font-bold">ACTIVE CODE REPOS</span>
                 </span>
                 <span>•</span>
-                <span className="text-cyan-400">https://github.com/prajwal9762</span>
+                <span className="text-cyan-400">{BRAND_GITHUB}</span>
               </div>
             </div>
 
             {/* Right Action Box */}
             <div className="flex flex-col items-center gap-4 w-full sm:w-auto">
               <a
-                href="https://github.com/prajwal9762"
+                href={BRAND_GITHUB}
                 target="_blank"
                 rel="noopener noreferrer"
                 onMouseEnter={() => soundFx.playHover()}

@@ -5,7 +5,7 @@ import { doc, setDoc } from 'firebase/firestore';
 import { db, handleFirestoreError, OperationType } from '../lib/firebase';
 import { soundFx } from '../utils/audio';
 import { FirebaseCommunity } from './FirebaseCommunity';
-import { BRAND_EMAIL, BRAND_GITHUB, BRAND_LOCATION, BRAND_NAME, BRAND_WEBSITE } from '../utils/brand';
+import { BRAND_EMAIL, BRAND_GITHUB, BRAND_GITHUB_HANDLE, BRAND_LOCATION, BRAND_NAME, BRAND_WEBSITE } from '../utils/brand';
 
 export const ContactSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'inquiry' | 'guestbook'>('inquiry');
@@ -91,7 +91,7 @@ export const ContactSection: React.FC = () => {
             className="flex items-center gap-2 rounded-2xl border border-slate-800 bg-slate-900/90 px-4 py-2.5 font-mono text-xs text-slate-300 hover:text-white transition-all"
           >
             <Github className="h-4 w-4 text-cyan-400" />
-            <span>@prajwal9762</span>
+            <span>{BRAND_GITHUB_HANDLE}</span>
           </a>
         </div>
 
@@ -233,7 +233,7 @@ export const ContactSection: React.FC = () => {
                   className="flex items-center gap-1.5 hover:text-amber-400 transition-colors"
                 >
                   <Github className="h-4 w-4 text-amber-400" />
-                  <span>GitHub @prajwal9762</span>
+                  <span>GitHub {BRAND_GITHUB_HANDLE}</span>
                 </a>
 
                 <span>•</span>

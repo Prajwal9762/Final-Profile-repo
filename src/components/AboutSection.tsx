@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { User, Code, Terminal, Cpu, Flame, Sparkles, Compass, GraduationCap, MapPin, Mail, Globe } from 'lucide-react';
 import { CyberCreature } from './CyberCreature';
 import { soundFx } from '../utils/audio';
-import { BRAND_LOGO_SRC, BRAND_EMAIL, BRAND_WEBSITE, BRAND_LOCATION } from '../utils/brand';
+import { BRAND_LOGO_SRC, BRAND_EMAIL, BRAND_WEBSITE, BRAND_LOCATION, BRAND_NAME, BRAND_GITHUB_HANDLE } from '../utils/brand';
 
 export const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
   const [activeTab, setActiveTab] = useState<'story' | 'academic' | 'philosophy' | 'goals'>('story');
@@ -29,8 +29,8 @@ export const AboutSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => {
             WHO AM I?
           </h2>
           <p className="mt-2 text-xl font-syne text-amber-400 font-bold flex items-center gap-2">
-            <span>Prajwal Pokharel</span>
-            <span className="text-sm font-mono text-slate-400 font-normal">(@prajwal9762)</span>
+            <span>{BRAND_NAME}</span>
+            <span className="text-sm font-mono text-slate-400 font-normal">({BRAND_GITHUB_HANDLE})</span>
           </p>
         </div>
 

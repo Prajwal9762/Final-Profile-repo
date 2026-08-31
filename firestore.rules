@@ -72,6 +72,17 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Portfolio Meta / Project Claps aggregation document
+    function isValidPortfolioMeta(data) {
+      return data.size() <= 50;
+    }
+
+    match /portfolio_meta/{metaId} {
+      allow read: if true;
+      allow create, update: if isValidId(metaId) && isValidPortfolioMeta(incoming());
+      allow delete: if false;
+    }
+
     // Connection test document
     match /test/connection {
       allow read: if true;

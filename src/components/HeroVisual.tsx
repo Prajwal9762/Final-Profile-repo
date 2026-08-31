@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import { Terminal as TerminalIcon, Sparkles, Play, Code2 } from 'lucide-react';
 import { soundFx } from '../utils/audio';
 import { THEMES, ThemeId } from '../utils/theme';
+import { BRAND_GITHUB } from '../utils/brand';
 
 export const HeroVisual: React.FC<{ isMobile: boolean; themeId?: ThemeId }> = ({
   isMobile,
@@ -173,7 +174,7 @@ export const HeroVisual: React.FC<{ isMobile: boolean; themeId?: ThemeId }> = ({
     } else if (cmd === 'skills') {
       response = 'HTML5, CSS3, JavaScript, TypeScript, React, Tailwind CSS, Python, Git, Linux.';
     } else if (cmd === 'github') {
-      response = 'https://github.com/prajwal9762';
+      response = BRAND_GITHUB;
     } else if (cmd === 'contact') {
       response = 'Official Site: https://prajwal-pokharel.com.np';
     } else if (cmd === 'clear') {

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Cpu, Code, Wrench, Sparkles, Orbit, Layers, CheckCircle2, X, Terminal, Flame, Database, Layout } from 'lucide-react';
 import { soundFx } from '../utils/audio';
+import { BRAND_GITHUB_HANDLE } from '../utils/brand';
 
 interface SkillItem {
   id: string;
@@ -130,9 +131,9 @@ export const SkillsSection: React.FC<{ isMobile: boolean }> = ({ isMobile }) => 
       name: 'Git & GitHub',
       category: 'CS_EXPLORATIONS',
       icon: '🐙',
-      description: 'Version control workflows, commit history tracking, repository hosting on GitHub (@prajwal9762), and deployment of static sites on GitHub Pages.',
+      description: `Version control workflows, commit history tracking, repository hosting on GitHub (${BRAND_GITHUB_HANDLE}), and deployment of static sites on GitHub Pages.`,
       level: 'Version Control',
-      tags: ['@prajwal9762', 'Commits', 'Branches', 'GitHub Pages', 'Remotes'],
+      tags: [BRAND_GITHUB_HANDLE, 'Commits', 'Branches', 'GitHub Pages', 'Remotes'],
     },
     {
       id: 'algorithms',
